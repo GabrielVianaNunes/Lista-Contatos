@@ -1,20 +1,22 @@
 <div class="container mt-4">
-    <h2>Lista de Contatos</h2>
-  
-    <div *ngIf="contacts.length > 0; else emptyList">
-      <ul class="list-group">
-        <li 
-          class="list-group-item d-flex justify-content-between align-items-center"
-          *ngFor="let contact of contacts; let i = index"
-        >
+  <h2>Lista de Contatos</h2>
+  <input type="text" [(ngModel)]="filtro" class="form-control mb-3" placeholder="Filtrar por nome">
+
+  <div *ngIf="contatosFiltrados.length > 0; else empty">
+    <ul class="list-group">
+      <li *ngFor="let contact of contatosFiltrados; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
+        <span>
           {{ contact.name }} - {{ contact.email }} - {{ contact.phone }}
-          <button class="btn btn-danger btn-sm" (click)="removeContact(i)">Remover</button>
-        </li>
-      </ul>
-    </div>
-  
-    <ng-template #emptyList>
-      <p class="text-muted">Nenhum contato cadastrado.</p>
-    </ng-template>
+        </span>
+        <span>
+          <a [routerLink]="['/editar', contact.id]" class="btn btn-sm btn-warning me-2">Editar</a>
+          <button class="btn btn-sm btn-danger" (click)="remover(i)">Remover</button>
+        </span>
+      </li>
+    </ul>
   </div>
-  
+
+  <ng-template #empty>
+    <p class="text-muted">Nenhum contato encontrado.</p>
+  </ng-template>
+</div>

@@ -6,7 +6,7 @@ import { Contact } from '../models/contact';
 })
 export class ContactService {
   private contacts: Contact[] = [];
-  private nextId: number = 1; // contador de ID único e incremental
+  private nextId = 1;
 
   constructor() {}
 
@@ -14,10 +14,14 @@ export class ContactService {
     return this.contacts;
   }
 
+  getContactById(id: number): Contact | undefined {
+    return this.contacts.find(c => c.id === id);
+  }
+
   addContact(contact: Omit<Contact, 'id'>): void {
     const newContact: Contact = {
-      ...contact,
-      id: this.nextId++
+      id: this.nextId++,
+      ...contact
     };
     this.contacts.push(newContact);
   }
@@ -26,7 +30,12 @@ export class ContactService {
     this.contacts.splice(index, 1);
   }
 
-  getContactByIndex(index: number): Contact | undefined {
-    return this.contacts[index];
+  updateContact(id: number, updated: Omit<Contact, 'id'>): void {
+    const contact = this.getContactById(id);
+    if (contact) {
+      contact.name = updated.name;
+      contact.email = updated.email;
+      contact.phone = updated.phone;
+    }
   }
 }

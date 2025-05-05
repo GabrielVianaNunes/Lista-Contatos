@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ContactService } from '../../services/contact.service';
 import { Contact } from '../../models/contact';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-contact-form',
@@ -14,12 +15,12 @@ import { Contact } from '../../models/contact';
 export class ContactFormComponent {
   contact: Omit<Contact, 'id'> = { name: '', email: '', phone: '' };
 
-  constructor(private contactService: ContactService) {}
+  constructor(private contactService: ContactService, private router: Router) {}
 
   adicionarContato() {
     if (this.contact.name && this.contact.email && this.contact.phone) {
       this.contactService.addContact({ ...this.contact });
-      this.contact = { name: '', email: '', phone: '' };
+      this.router.navigate(['/contatos']);
     }
   }
 }

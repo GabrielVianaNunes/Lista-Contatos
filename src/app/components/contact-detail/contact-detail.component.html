@@ -1,1 +1,45 @@
-<p>contact-detail works!</p>
+<div class="container mt-4">
+  <h2>Editar Contato</h2>
+
+  <form *ngIf="contact" (ngSubmit)="salvarEdicao()">
+    <div class="mb-3">
+      <label class="form-label">Nome</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="contactCopy.name"
+        name="name"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        [(ngModel)]="contactCopy.email"
+        name="email"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Telefone</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="contactCopy.phone"
+        name="phone"
+        required
+      />
+    </div>
+
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <a routerLink="/contatos" class="btn btn-secondary ms-2">Cancelar</a>
+  </form>
+
+  <div *ngIf="!contact" class="alert alert-danger">
+    Contato não encontrado.
+  </div>
+</div>
