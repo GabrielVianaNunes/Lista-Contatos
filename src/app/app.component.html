@@ -1,16 +1,17 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
-  <a class="navbar-brand" href="#">Lista de Contatos</a>
+  <a class="navbar-brand fw-bold fs-4" routerLink="/">Lista de Contatos</a>
   <div class="collapse navbar-collapse">
-    <ul class="navbar-nav me-auto">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/contatos" routerLinkActive="active">Contatos</a>
+        <a class="nav-link btn btn-outline-primary me-2" routerLink="/contatos" routerLinkActive="active">Contatos</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/adicionar" routerLinkActive="active">Adicionar Contato</a>
+        <a class="nav-link btn btn-primary text-white" routerLink="/adicionar" routerLinkActive="active">Adicionar Contato</a>
       </li>
     </ul>
   </div>
 </nav>
+
 <div class="container mt-4">
   <router-outlet></router-outlet>
 </div>

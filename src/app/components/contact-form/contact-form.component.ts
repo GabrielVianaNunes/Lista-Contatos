@@ -15,12 +15,17 @@ import { Router } from '@angular/router';
 export class ContactFormComponent {
   contact: Omit<Contact, 'id'> = { name: '', email: '', phone: '' };
 
-  constructor(private contactService: ContactService, private router: Router) {}
+  constructor(
+    private contactService: ContactService,
+    private router: Router
+  ) {}
 
   adicionarContato() {
     if (this.contact.name && this.contact.email && this.contact.phone) {
-      this.contactService.addContact({ ...this.contact });
-      this.router.navigate(['/contatos']);
+      this.contactService.addContact({ ...this.contact }).subscribe({
+        next: () => this.router.navigate(['/contatos']),
+        error: err => console.error('Erro ao adicionar contato:', err)
+      });
     }
   }
 }

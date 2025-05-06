@@ -5,7 +5,7 @@ import { ContactDetailComponent } from './components/contact-detail/contact-deta
 
 export const routes: Routes = [
   { path: '', redirectTo: 'contatos', pathMatch: 'full' },
-  { path: 'contatos', component: ContactListComponent },
-  { path: 'adicionar', component: ContactFormComponent },
-  { path: 'editar/:id', component: ContactDetailComponent }
+  { path: 'contatos', loadComponent: () => import('./components/contact-list/contact-list.component').then(m => m.ContactListComponent) },
+  { path: 'adicionar', loadComponent: () => import('./components/contact-form/contact-form.component').then(m => m.ContactFormComponent) },
+  { path: 'editar/:id', loadComponent: () => import('./components/contact-detail/contact-detail.component').then(m => m.ContactDetailComponent) }
 ];

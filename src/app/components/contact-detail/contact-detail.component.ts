@@ -20,11 +20,12 @@ export class ContactDetailComponent {
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.contact = this.contactService.getContactById(id);
-    if (this.contact) {
-      this.contactCopy = { name: this.contact.name, email: this.contact.email, phone: this.contact.phone };
-    }
+    this.contactService.getContactById(id).subscribe(contact => {
+      this.contact = contact;
+      this.contactCopy = { name: contact.name, email: contact.email, phone: contact.phone };
+    });
   }
+  
 
   salvarEdicao() {
     if (this.contact) {
