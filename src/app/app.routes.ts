@@ -21,5 +21,10 @@ export const routes: Routes = [
     path: 'grupos',
     loadComponent: () => import('./components/contact-groups/contact-groups.component')
       .then(m => m.ContactGroupsComponent)
+  },
+  {
+    path: 'favoritos',
+    loadComponent: () => import('./components/contact-favorites/contact-favorites.component')
+      .then(m => m.ContactFavoritesComponent)
   }
 ];

@@ -1,0 +1,24 @@
+<div class="container mt-4">
+    <h2>Contatos Favoritos</h2>
+
+    <div *ngIf="contatosFavoritos.length > 0; else nenhum">
+        <ul class="list-group">
+            <li *ngFor="let contact of contatosFavoritos"
+                class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <span class="fw-bold">{{ contact.name }}</span> - {{ contact.email }} - {{ contact.phone }}
+
+                    <span *ngIf="contact.groups && contact.groups.length > 0" class="text-muted small ms-2">
+                        ({{ contact.groups.join(', ') }})
+                    </span>
+                </div>
+
+                <a [routerLink]="['/editar', contact.id]" class="btn btn-sm btn-warning">Editar</a>
+            </li>
+        </ul>
+    </div>
+
+    <ng-template #nenhum>
+        <p class="text-muted">Nenhum contato marcado como favorito.</p>
+    </ng-template>
+</div>

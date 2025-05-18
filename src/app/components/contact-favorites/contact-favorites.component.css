@@ -1,0 +1,28 @@
+.container h2 {
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-group-item .fw-bold {
+  color: #212529;
+}
+
+.text-muted {
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+.btn-warning {
+  min-width: 80px;
+}
+
+p.text-muted {
+  font-style: italic;
+  text-align: center;
+}
