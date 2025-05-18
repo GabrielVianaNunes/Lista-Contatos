@@ -4,8 +4,14 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ContactService } from '../../services/contact.service';
 import { GroupService } from '../../services/group.service';
+import { AppointmentService } from '../../services/appointment.service';
 import { Contact } from '../../models/contact';
+import { Appointment } from '../../models/appointment';
 import { Observable } from 'rxjs';
+import { format, parseISO } from 'date-fns';
+
+import { TabViewModule } from 'primeng/tabview'; // ✅ ADICIONE ESTA LINHA
+import { PanelModule } from 'primeng/panel';      // ✅ NECESSÁRIO PARA <p-panel>
 
 interface Group {
   id: number;
@@ -15,7 +21,13 @@ interface Group {
 @Component({
   selector: 'app-contact-detail',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    TabViewModule, // ✅ AQUI
+    PanelModule     // ✅ AQUI
+  ],
   templateUrl: './contact-detail.component.html',
   styleUrls: ['./contact-detail.component.css']
 })
@@ -30,14 +42,16 @@ export class ContactDetailComponent {
   };
 
   allGroups$: Observable<Group[]>;
+  compromissosFuturos: Appointment[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private contactService: ContactService,
     private groupService: GroupService,
+    private appointmentService: AppointmentService,
     private router: Router
   ) {
-    this.allGroups$ = this.groupService.getGroups(); // Agora retorna Observable<Group[]>
+    this.allGroups$ = this.groupService.getGroups();
   }
 
   ngOnInit() {
@@ -51,6 +65,11 @@ export class ContactDetailComponent {
         isFavorite: contact.isFavorite ?? false,
         groups: contact.groups ?? []
       };
+
+      this.appointmentService.getAppointmentsByContact(contact.id).subscribe(apts => {
+        const agora = new Date();
+        this.compromissosFuturos = apts.filter(a => new Date(a.dateTime) > agora);
+      });
     });
   }
 
@@ -73,5 +92,9 @@ export class ContactDetailComponent {
 
   isGroupSelected(groupName: string): boolean {
     return this.contactCopy.groups?.includes(groupName) ?? false;
+  }
+
+  formatarDataHora(dateTime: string): string {
+    return format(parseISO(dateTime), 'dd/MM/yyyy HH:mm');
   }
 }

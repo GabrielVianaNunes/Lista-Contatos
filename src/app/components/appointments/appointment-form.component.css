@@ -1,0 +1,29 @@
+/* Estilo geral */
+.container h2 {
+  font-weight: 600;
+  color: #333;
+}
+
+/* Espaçamento entre os campos */
+.mb-3 {
+  margin-bottom: 1rem;
+}
+
+/* Estilo dos labels */
+.form-label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+/* Botões */
+button[type="submit"],
+a.btn-secondary {
+  min-width: 120px;
+}
+
+/* Alerta de erro */
+.alert-danger {
+  font-weight: 500;
+  margin-top: 0.5rem;
+  text-align: center;
+}

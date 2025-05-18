@@ -1,0 +1,59 @@
+<div class="container mt-4">
+  <h2>Agendar Compromisso</h2>
+
+  <form (ngSubmit)="salvar()" #form="ngForm">
+    <!-- Título -->
+    <div class="mb-3">
+      <label class="form-label">Título</label>
+      <input type="text" class="form-control" name="title" [(ngModel)]="appointment.title" required />
+    </div>
+
+    <!-- Descrição -->
+    <div class="mb-3">
+      <label class="form-label">Descrição</label>
+      <textarea class="form-control" name="description" rows="3" [(ngModel)]="appointment.description"></textarea>
+    </div>
+
+    <!-- Data e Hora -->
+    <div class="mb-3">
+      <label class="form-label">Data e Hora</label>
+      <p-calendar
+        [(ngModel)]="appointment.dateTime"
+        name="dateTime"
+        showTime="true"
+        hourFormat="24"
+        dateFormat="dd/mm/yy"
+        showIcon="true"
+        inputId="dateTime"
+        class="w-100"
+        required
+      ></p-calendar>
+    </div>
+
+    <!-- Local -->
+    <div class="mb-3">
+      <label class="form-label">Local</label>
+      <input type="text" class="form-control" name="location" [(ngModel)]="appointment.location" required />
+    </div>
+
+    <!-- Contato -->
+    <div class="mb-3">
+      <label class="form-label">Contato</label>
+      <select class="form-select" name="contactId" [(ngModel)]="appointment.contactId" required>
+        <option value="" disabled>Selecione um contato</option>
+        <option *ngFor="let contact of contacts" [value]="contact.id">
+          {{ contact.name }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Mensagem de erro -->
+    <div *ngIf="erro" class="alert alert-danger">
+      {{ erro }}
+    </div>
+
+    <!-- Ações -->
+    <button type="submit" class="btn btn-success me-2" [disabled]="form.invalid">Salvar</button>
+    <a routerLink="/contatos" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>

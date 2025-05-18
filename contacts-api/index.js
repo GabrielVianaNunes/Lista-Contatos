@@ -118,6 +118,63 @@ app.delete('/groups/:id', (req, res) => {
   res.status(204).end();
 });
 
+// --- ROTAS DE COMPROMISSOS ---
+let appointments = [];
+
+// GET todos ou por contactId
+app.get('/appointments', (req, res) => {
+  const contactId = req.query.contactId;
+  if (contactId) {
+    const filtered = appointments.filter(a => a.contactId === Number(contactId));
+    res.json(filtered);
+  } else {
+    res.json(appointments);
+  }
+});
+
+// POST novo compromisso
+app.post('/appointments', (req, res) => {
+  const { title, description, dateTime, location, contactId } = req.body;
+
+  if (!title || !dateTime || !location || !contactId) {
+    return res.status(400).json({ error: 'Dados incompletos para o compromisso' });
+  }
+
+  const now = new Date();
+  const dataHora = new Date(dateTime);
+  if (dataHora < now) {
+    return res.status(400).json({ error: 'Não é permitido criar compromissos no passado' });
+  }
+
+  const conflito = appointments.some(a =>
+    a.contactId === contactId &&
+    a.dateTime === dateTime
+  );
+
+  if (conflito) {
+    return res.status(409).json({ error: 'Este contato já possui compromisso neste horário' });
+  }
+
+  const newAppointment = {
+    id: appointments.length > 0 ? appointments[appointments.length - 1].id + 1 : 1,
+    title,
+    description,
+    dateTime,
+    location,
+    contactId
+  };
+
+  appointments.push(newAppointment);
+  res.status(201).json(newAppointment);
+});
+
+// DELETE compromisso
+app.delete('/appointments/:id', (req, res) => {
+  const id = Number(req.params.id);
+  appointments = appointments.filter(a => a.id !== id);
+  res.status(204).end();
+});
+
 // Inicialização
 app.listen(PORT, () => {
   console.log(`API de contatos rodando em http://localhost:${PORT}`);

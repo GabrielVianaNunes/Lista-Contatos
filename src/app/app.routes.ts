@@ -26,5 +26,10 @@ export const routes: Routes = [
     path: 'favoritos',
     loadComponent: () => import('./components/contact-favorites/contact-favorites.component')
       .then(m => m.ContactFavoritesComponent)
-  }
+  },
+  {
+  path: 'compromissos',
+  loadComponent: () => import('./components/appointments/agenda-list.component')
+    .then(m => m.AgendaListComponent)
+}
 ];

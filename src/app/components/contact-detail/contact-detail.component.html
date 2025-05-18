@@ -1,98 +1,86 @@
 <div class="container mt-4">
   <h2 class="mb-4">Editar Contato</h2>
 
-  <form *ngIf="contact" (ngSubmit)="salvarEdicao()" #editForm="ngForm">
-    <!-- Nome -->
-    <div class="mb-3">
-      <label for="name" class="form-label">Nome</label>
-      <input
-        type="text"
-        id="name"
-        name="name"
-        class="form-control"
-        required
-        [(ngModel)]="contactCopy.name"
-        #name="ngModel"
-      />
-      <div *ngIf="name.invalid && name.touched" class="text-danger">
-        Nome é obrigatório.
-      </div>
-    </div>
+  <p-tabView *ngIf="contact">
+    <!-- Aba 1: Dados -->
+    <p-tabPanel header="Dados do Contato">
+      <form (ngSubmit)="salvarEdicao()" #editForm="ngForm">
+        <!-- Nome -->
+        <div class="mb-3">
+          <label for="name" class="form-label">Nome</label>
+          <input type="text" id="name" name="name" class="form-control" required [(ngModel)]="contactCopy.name" #name="ngModel" />
+          <div *ngIf="name.invalid && name.touched" class="text-danger">
+            Nome é obrigatório.
+          </div>
+        </div>
 
-    <!-- Email -->
-    <div class="mb-3">
-      <label for="email" class="form-label">Email</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        class="form-control"
-        required
-        [(ngModel)]="contactCopy.email"
-        #email="ngModel"
-      />
-      <div *ngIf="email.invalid && email.touched" class="text-danger">
-        Email válido é obrigatório.
-      </div>
-    </div>
+        <!-- Email -->
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" name="email" class="form-control" required [(ngModel)]="contactCopy.email" #email="ngModel" />
+          <div *ngIf="email.invalid && email.touched" class="text-danger">
+            Email válido é obrigatório.
+          </div>
+        </div>
 
-    <!-- Telefone -->
-    <div class="mb-3">
-      <label for="phone" class="form-label">Telefone</label>
-      <input
-        type="text"
-        id="phone"
-        name="phone"
-        class="form-control"
-        required
-        [(ngModel)]="contactCopy.phone"
-        #phone="ngModel"
-      />
-      <div *ngIf="phone.invalid && phone.touched" class="text-danger">
-        Telefone é obrigatório.
-      </div>
-    </div>
+        <!-- Telefone -->
+        <div class="mb-3">
+          <label for="phone" class="form-label">Telefone</label>
+          <input type="text" id="phone" name="phone" class="form-control" required [(ngModel)]="contactCopy.phone" #phone="ngModel" />
+          <div *ngIf="phone.invalid && phone.touched" class="text-danger">
+            Telefone é obrigatório.
+          </div>
+        </div>
 
-    <!-- Favorito -->
-    <div class="form-check mb-3">
-      <input
-        class="form-check-input"
-        type="checkbox"
-        id="isFavorite"
-        name="isFavorite"
-        [(ngModel)]="contactCopy.isFavorite"
-      />
-      <label class="form-check-label" for="isFavorite">
-        Marcar como favorito ⭐
-      </label>
-    </div>
-
-    <!-- Grupos -->
-    <div class="mb-3">
-      <label class="form-label">Grupos</label>
-      <div *ngIf="allGroups$ | async as grupos">
-        <div *ngFor="let grupo of grupos" class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            [id]="'grupo-' + grupo.id"
-            [checked]="isGroupSelected(grupo.name)"
-            (change)="toggleGroup(grupo.name)"
-          />
-          <label class="form-check-label" [for]="'grupo-' + grupo.id">
-            {{ grupo.name }}
+        <!-- Favorito -->
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" id="isFavorite" name="isFavorite" [(ngModel)]="contactCopy.isFavorite" />
+          <label class="form-check-label" for="isFavorite">
+            Marcar como favorito ⭐
           </label>
         </div>
+
+        <!-- Grupos -->
+        <div class="mb-3">
+          <label class="form-label">Grupos</label>
+          <div *ngIf="allGroups$ | async as grupos">
+            <div *ngFor="let grupo of grupos" class="form-check">
+              <input class="form-check-input" type="checkbox" [id]="'grupo-' + grupo.id"
+                     [checked]="isGroupSelected(grupo.name)" (change)="toggleGroup(grupo.name)" />
+              <label class="form-check-label" [for]="'grupo-' + grupo.id">
+                {{ grupo.name }}
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ações -->
+        <button type="submit" class="btn btn-success" [disabled]="editForm.invalid">
+          Salvar Alterações
+        </button>
+        <a routerLink="/contatos" class="btn btn-secondary ms-2">Cancelar</a>
+      </form>
+    </p-tabPanel>
+
+    <!-- Aba 2: Compromissos -->
+    <p-tabPanel header="Compromissos Futuros">
+      <div *ngIf="compromissosFuturos.length > 0; else nenhum">
+        <p-panel *ngFor="let compromisso of compromissosFuturos" [header]="compromisso.title" class="mb-2">
+          <div>
+            <strong>Data:</strong> {{ formatarDataHora(compromisso.dateTime) }}<br />
+            <strong>Local:</strong> {{ compromisso.location }}<br />
+            <strong>Descrição:</strong> {{ compromisso.description || '---' }}
+          </div>
+        </p-panel>
       </div>
-    </div>
 
-    <!-- Ações -->
-    <button type="submit" class="btn btn-success" [disabled]="editForm.invalid">
-      Salvar Alterações
-    </button>
-    <a routerLink="/contatos" class="btn btn-secondary ms-2">Cancelar</a>
-  </form>
+      <ng-template #nenhum>
+        <div class="text-muted mt-3">Nenhum compromisso futuro agendado.</div>
+      </ng-template>
+    </p-tabPanel>
+  </p-tabView>
 
+  <!-- Caso contato não seja encontrado -->
   <div *ngIf="!contact" class="alert alert-danger mt-4">
     Contato não encontrado.
   </div>

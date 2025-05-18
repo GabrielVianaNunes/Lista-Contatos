@@ -1,0 +1,21 @@
+<div class="container mt-4">
+  <h2 class="mb-3">Agenda de Compromissos</h2>
+
+  <p-accordion>
+    <p-accordionTab *ngFor="let data of objectKeys(compromissosAgrupados)" [header]="data">
+      <div *ngFor="let compromisso of compromissosAgrupados[data]" class="mb-3">
+        <p-panel [header]="compromisso.title">
+          <div>
+            <strong>Horário:</strong> {{ formatarHora(compromisso.dateTime) }}<br />
+            <strong>Local:</strong> {{ compromisso.location }}<br />
+            <strong>Descrição:</strong> {{ compromisso.description || '---' }}
+          </div>
+        </p-panel>
+      </div>
+    </p-accordionTab>
+  </p-accordion>
+
+  <div *ngIf="!objectKeys(compromissosAgrupados).length" class="text-muted mt-3">
+    Nenhum compromisso agendado.
+  </div>
+</div>
