@@ -1,0 +1,30 @@
+/* Espaçamento entre os campos */
+.form-label {
+  font-weight: 500;
+}
+
+.form-check-label {
+  cursor: pointer;
+}
+
+.form-check {
+  margin-bottom: 0.5rem;
+}
+
+button[type="submit"] {
+  min-width: 150px;
+}
+
+.alert-danger {
+  font-weight: 500;
+  text-align: center;
+}
+
+.container h2 {
+  font-weight: 600;
+  color: #333;
+}
+
+input[type="checkbox"] {
+  cursor: pointer;
+}

@@ -1,0 +1,29 @@
+/* Espaçamento entre os elementos da lista */
+.list-group-item {
+  padding: 0.75rem 1rem;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Botões de ação */
+.list-group-item button {
+  min-width: 80px;
+}
+
+/* Espaço interno dos inputs */
+input.form-control {
+  font-weight: 500;
+}
+
+/* Realce para o campo de edição */
+input.form-control:focus {
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* Alinhar itens de edição */
+.list-group-item .d-flex {
+  align-items: center;
+}

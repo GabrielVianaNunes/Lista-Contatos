@@ -1,0 +1,36 @@
+/* Estilo para a estrela de favorito */
+button[title="Favorito"] {
+  background: none;
+  border: none;
+  color: #ffc107; /* amarelo */
+  font-size: 1.2rem;
+  padding: 0;
+  margin-right: 0.25rem;
+  cursor: pointer;
+}
+
+button[title="Favorito"]:hover {
+  color: #e0a800; /* tom mais escuro no hover */
+}
+
+/* Ícone desfavoritado */
+button[title="Favorito"]::after {
+  font-weight: bold;
+}
+
+/* Estilo para o item da lista */
+.list-group-item {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Espaçamento entre os filtros */
+.d-flex.gap-2 > * {
+  flex: 1;
+}
+
+/* Grupos em cinza claro e fonte menor */
+.text-muted.small {
+  font-size: 0.8rem;
+  color: #adb5bd;
+}

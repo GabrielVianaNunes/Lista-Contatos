@@ -2,6 +2,7 @@
   <h2>Adicionar Contato</h2>
 
   <form (ngSubmit)="adicionarContato()" #form="ngForm">
+    <!-- Nome -->
     <div class="mb-3">
       <label class="form-label">Nome</label>
       <input
@@ -13,6 +14,7 @@
       />
     </div>
 
+    <!-- Email -->
     <div class="mb-3">
       <label class="form-label">Email</label>
       <input
@@ -24,6 +26,7 @@
       />
     </div>
 
+    <!-- Telefone -->
     <div class="mb-3">
       <label class="form-label">Telefone</label>
       <input
@@ -35,6 +38,39 @@
       />
     </div>
 
+    <!-- Grupos -->
+    <div class="mb-3">
+      <label class="form-label">Grupos</label>
+      <div class="form-check" *ngFor="let grupo of gruposDisponiveis">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          [value]="grupo.name"
+          [checked]="grupoSelecionado(grupo.name)"
+          (change)="alternarGrupo(grupo.name)"
+          id="grupo-{{ grupo.id }}"
+        />
+        <label class="form-check-label" for="grupo-{{ grupo.id }}">
+          {{ grupo.name }}
+        </label>
+      </div>
+    </div>
+
+    <!-- Favorito -->
+    <div class="form-check mb-3">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        id="favorito"
+        name="isFavorite"
+        [(ngModel)]="contact.isFavorite"
+      />
+      <label class="form-check-label" for="favorito">
+        ⭐ Marcar como favorito
+      </label>
+    </div>
+
+    <!-- Ações -->
     <button type="submit" class="btn btn-success" [disabled]="form.invalid">Adicionar</button>
     <a routerLink="/contatos" class="btn btn-secondary ms-2">Cancelar</a>
   </form>

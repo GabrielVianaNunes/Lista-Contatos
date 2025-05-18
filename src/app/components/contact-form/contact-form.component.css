@@ -1,0 +1,20 @@
+/* Espaçamento entre grupos de checkbox */
+.form-check {
+  margin-bottom: 0.5rem;
+}
+
+/* Checkbox alinhado */
+.form-check-input {
+  margin-top: 0.3rem;
+}
+
+/* Destaque leve para a seção de grupos */
+.mb-3 label.form-label {
+  font-weight: 600;
+}
+
+/* Ícone de estrela */
+.form-check-label[for="favorito"] {
+  font-weight: 500;
+  color: #ffc107; /* amarelo Bootstrap */
+}

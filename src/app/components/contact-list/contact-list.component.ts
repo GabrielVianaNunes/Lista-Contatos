@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ContactService } from '../../services/contact.service';
+import { GroupService } from '../../services/group.service';
 import { Contact } from '../../models/contact';
 
 @Component({
@@ -14,12 +15,18 @@ import { Contact } from '../../models/contact';
 })
 export class ContactListComponent implements OnInit {
   filtro: string = '';
+  grupoSelecionado: string = '';
   contacts: Contact[] = [];
+  grupos: string[] = [];
 
-  constructor(private contactService: ContactService) {}
+  constructor(
+    private contactService: ContactService,
+    private groupService: GroupService
+  ) {}
 
   ngOnInit(): void {
     this.carregarContatos();
+    this.carregarGrupos();
   }
 
   carregarContatos(): void {
@@ -29,9 +36,17 @@ export class ContactListComponent implements OnInit {
     });
   }
 
+  carregarGrupos(): void {
+    this.groupService.getGroups().subscribe({
+      next: (dados) => (this.grupos = dados.map(g => g.name)),
+      error: (erro) => console.error('Erro ao carregar grupos:', erro)
+    });
+  }
+
   get contatosFiltrados(): Contact[] {
     return this.contacts.filter(contact =>
-      contact.name.toLowerCase().includes(this.filtro.toLowerCase())
+      contact.name.toLowerCase().includes(this.filtro.toLowerCase()) &&
+      (!this.grupoSelecionado || contact.groups?.includes(this.grupoSelecionado))
     );
   }
 
@@ -43,5 +58,16 @@ export class ContactListComponent implements OnInit {
         error: (erro) => console.error('Erro ao remover contato:', erro)
       });
     }
+  }
+
+  alternarFavorito(contato: Contact): void {
+    const atualizado = {
+      ...contato,
+      isFavorite: !contato.isFavorite
+    };
+    this.contactService.updateContact(contato.id, atualizado).subscribe({
+      next: () => this.carregarContatos(),
+      error: (erro) => console.error('Erro ao atualizar favorito:', erro)
+    });
   }
 }

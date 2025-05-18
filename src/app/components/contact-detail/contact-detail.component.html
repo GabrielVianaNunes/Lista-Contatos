@@ -2,6 +2,7 @@
   <h2 class="mb-4">Editar Contato</h2>
 
   <form *ngIf="contact" (ngSubmit)="salvarEdicao()" #editForm="ngForm">
+    <!-- Nome -->
     <div class="mb-3">
       <label for="name" class="form-label">Nome</label>
       <input
@@ -18,6 +19,7 @@
       </div>
     </div>
 
+    <!-- Email -->
     <div class="mb-3">
       <label for="email" class="form-label">Email</label>
       <input
@@ -34,6 +36,7 @@
       </div>
     </div>
 
+    <!-- Telefone -->
     <div class="mb-3">
       <label for="phone" class="form-label">Telefone</label>
       <input
@@ -50,6 +53,40 @@
       </div>
     </div>
 
+    <!-- Favorito -->
+    <div class="form-check mb-3">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        id="isFavorite"
+        name="isFavorite"
+        [(ngModel)]="contactCopy.isFavorite"
+      />
+      <label class="form-check-label" for="isFavorite">
+        Marcar como favorito ⭐
+      </label>
+    </div>
+
+    <!-- Grupos -->
+    <div class="mb-3">
+      <label class="form-label">Grupos</label>
+      <div *ngIf="allGroups$ | async as grupos">
+        <div *ngFor="let grupo of grupos" class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [id]="'grupo-' + grupo.id"
+            [checked]="isGroupSelected(grupo.name)"
+            (change)="toggleGroup(grupo.name)"
+          />
+          <label class="form-check-label" [for]="'grupo-' + grupo.id">
+            {{ grupo.name }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ações -->
     <button type="submit" class="btn btn-success" [disabled]="editForm.invalid">
       Salvar Alterações
     </button>
