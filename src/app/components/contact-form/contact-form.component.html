@@ -1,58 +1,41 @@
 <div class="container mt-4">
-  <h2 class="mb-4">Adicionar Novo Contato</h2>
+  <h2>Adicionar Contato</h2>
 
-  <form (ngSubmit)="adicionarContato()" #contactForm="ngForm">
+  <form (ngSubmit)="adicionarContato()" #form="ngForm">
     <div class="mb-3">
-      <label for="name" class="form-label">Nome</label>
+      <label class="form-label">Nome</label>
       <input
         type="text"
-        id="name"
-        name="name"
         class="form-control"
-        required
+        name="name"
         [(ngModel)]="contact.name"
-        #name="ngModel"
+        required
       />
-      <div *ngIf="name.invalid && name.touched" class="text-danger">
-        Nome é obrigatório.
-      </div>
     </div>
 
     <div class="mb-3">
-      <label for="email" class="form-label">Email</label>
+      <label class="form-label">Email</label>
       <input
         type="email"
-        id="email"
-        name="email"
         class="form-control"
-        required
+        name="email"
         [(ngModel)]="contact.email"
-        #email="ngModel"
+        required
       />
-      <div *ngIf="email.invalid && email.touched" class="text-danger">
-        Email válido é obrigatório.
-      </div>
     </div>
 
     <div class="mb-3">
-      <label for="phone" class="form-label">Telefone</label>
+      <label class="form-label">Telefone</label>
       <input
         type="text"
-        id="phone"
-        name="phone"
         class="form-control"
-        required
+        name="phone"
         [(ngModel)]="contact.phone"
-        #phone="ngModel"
+        required
       />
-      <div *ngIf="phone.invalid && phone.touched" class="text-danger">
-        Telefone é obrigatório.
-      </div>
     </div>
 
-    <button type="submit" class="btn btn-success" [disabled]="contactForm.invalid">
-      Salvar Contato
-    </button>
+    <button type="submit" class="btn btn-success" [disabled]="form.invalid">Adicionar</button>
     <a routerLink="/contatos" class="btn btn-secondary ms-2">Cancelar</a>
   </form>
 </div>

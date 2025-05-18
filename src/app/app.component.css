@@ -1,0 +1,35 @@
+/* Botões de navegação */
+.navbar .btn {
+  font-weight: 500;
+}
+
+/* Botão Contatos (outline claro) */
+.btn-outline-light {
+  color: white;
+  background-color: #198754;
+  border-color: #198754;
+}
+
+.btn-outline-light:hover {
+  background-color: #157347;
+  border-color: #146c43;
+}
+
+/* Botão Adicionar (verde) */
+.btn-success {
+  color: white;
+  background-color: #198754;
+  border-color: #198754;
+}
+
+.btn-success:hover {
+  background-color: #157347;
+  border-color: #146c43;
+}
+
+/* Estilo ativo para o botão que representa a rota atual */
+.btn.router-link-active {
+  background-color: #198754 !important;
+  color: white !important;
+  border-color: #198754 !important;
+}
